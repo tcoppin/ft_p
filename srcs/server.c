@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/28 13:16:48 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/04/29 04:28:25 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/04/29 04:42:37 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int		create_server(int port)
 	int					sock;
 	struct protoent		*proto;
 	struct sockaddr_in	s_in;
+	char				*dir;
 
 	proto = getprotobyname("tcp");
 	if (proto == 0)
@@ -31,6 +32,8 @@ int		create_server(int port)
 		exit(2);
 	}
 	listen(sock, 47);
+	dir = ft_strjoin("server_", ft_itoa(sock));
+	mkdir(dir, 0777);
 	return (sock);
 }
 
@@ -38,9 +41,12 @@ void	connect_cus(int cs)
 {
 	int		r;
 	char	buf[2048];
-	pid_t	pid;			
+	pid_t	pid;
+	char	*dir;		
 
 	pid = fork();
+	dir = ft_strjoin("client_", ft_itoa(cs));
+	mkdir(dir, 0777);
 	if (pid == 0)
 	{
 		while ((r = read(cs, buf, 2047)) > 0)

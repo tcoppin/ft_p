@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/28 13:16:54 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/04/29 04:24:49 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/04/29 04:43:00 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,6 @@ int		create_client(char *addr, int port)
 		exit(2);
 	}
 	return (sock);
-}
-
-void	connect_cus(int cs)
-{
-	int		r;
-	char	buf[2048];
-	pid_t	pid;			
-
-	pid = fork();
-	if (pid == 0)
-	{
-		while ((r = read(cs, buf, 2047)) > 0)
-		{
-			buf[r] = '\0';
-			ft_putstr(buf);
-		}
-		close(cs);
-		exit(0);
-	}
 }
 
 int		ft_put_prompt(void)
