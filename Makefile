@@ -6,7 +6,7 @@
 #    By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/04/28 12:54:53 by tcoppin           #+#    #+#              #
-#    Updated: 2015/04/28 13:57:52 by tcoppin          ###   ########.fr        #
+#    Updated: 2015/04/28 19:13:01 by tcoppin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ else
 	FLAGS	= -g3
 endif
 
-SRC_SV	=	server.c
+SRC_SV	=	server.c server_error.c
 SRC_CL	=	client.c
 
 OBJ_SV	=	$(SRC_SV:.c=.o)
