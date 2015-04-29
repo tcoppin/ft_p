@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/28 13:16:48 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/04/29 04:42:37 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/04/29 19:32:39 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,13 @@ void	connect_cus(int cs)
 	int		r;
 	char	buf[2048];
 	pid_t	pid;
-	char	*dir;		
+	pid_t	pid2;
+	char	*dir;
+	char	**t;		
 
+	t = NULL;
 	pid = fork();
+	t = (char **)malloc(sizeof(char) * 2);
 	dir = ft_strjoin("client_", ft_itoa(cs));
 	mkdir(dir, 0777);
 	if (pid == 0)
@@ -53,9 +57,39 @@ void	connect_cus(int cs)
 		{
 			buf[r] = '\0';
 			if (ft_strequ(buf, "ls\n"))
-				ft_putendl("LS");
-			else
-				ft_putstr(buf);
+			{
+				t[0] = ft_strdup("/bin/ls");
+				t[1] = NULL;
+				pid2 = fork();
+				if (pid2 == 0)
+				{
+				    dup2(cs, 0);
+					dup2(cs, 1);
+				    dup2(cs, 2);
+				    close(cs);
+					if (execv("/bin/ls", t))
+						ft_putendl("toto");
+				}
+				else
+					wait(NULL);
+			}
+			else if (ft_strequ(buf, "pwd\n"))
+			{
+				t[0] = ft_strdup("/bin/pwd");
+				t[1] = NULL;
+				pid2 = fork();
+				if (pid2 == 0)
+				{
+					dup2(cs, 0);
+					dup2(cs, 1);
+				    dup2(cs, 2);
+				    close(cs);
+				    if (execv("/bin/pwd", t))
+						ft_putendl("toto");
+				}
+				else
+					wait(NULL);
+			}
 		}
 		close(cs);
 		exit(0);

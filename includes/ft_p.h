@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/28 13:12:12 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/04/29 04:37:51 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/04/29 15:38:24 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <netinet/in.h>
 # include <arpa/inet.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
+# include <fcntl.h>
 
 /*
 **	server_error.c

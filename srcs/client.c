@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/28 13:16:54 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/04/29 04:43:00 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/04/29 19:38:10 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		create_client(char *addr, int port)
 	s_in.sin_addr.s_addr = inet_addr(addr);
 	if (connect(sock, (const struct sockaddr *)&s_in, sizeof(s_in)) == -1)
 	{
-		write(1, "Error connect\n", 11);
+		write(1, "Error connect\n", 14);
 		exit(2);
 	}
 	return (sock);
@@ -44,6 +44,9 @@ int		main(int ac, char **av)
 	int		port;
 	int		sock;
 	char	*line;
+	char	buf[2048];
+	char	*rtn;
+	int		r;
 
 	if (ac != 3)
 		ft_usage_cl(av[0]);
@@ -57,6 +60,10 @@ int		main(int ac, char **av)
 		{
 			line = ft_strjoin_free(line, "\n");
 			send(sock, (const void *)line, sizeof(line), MSG_DONTROUTE);
+			r = read(sock, buf, 2047);
+			buf[r] = '\0';
+			rtn = ft_strtrim(buf);
+			ft_putendl(rtn);
 		}
 	}
 	close(sock);
