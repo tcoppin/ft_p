@@ -6,7 +6,7 @@
 #    By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/04/28 12:54:53 by tcoppin           #+#    #+#              #
-#    Updated: 2015/04/28 19:13:01 by tcoppin          ###   ########.fr        #
+#    Updated: 2015/04/29 04:13:37 by tcoppin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ else
 endif
 
 SRC_SV	=	server.c server_error.c
-SRC_CL	=	client.c
+SRC_CL	=	client.c client_error.c
 
 OBJ_SV	=	$(SRC_SV:.c=.o)
 OBJ_CL	=	$(SRC_CL:.c=.o)

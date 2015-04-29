@@ -6,14 +6,11 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/28 13:16:48 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/04/29 03:27:05 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/04/29 04:28:25 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
-
-//check si port == number
-//check si port est superieur à 1024
 
 int		create_server(int port)
 {
@@ -39,15 +36,24 @@ int		create_server(int port)
 
 void	connect_cus(int cs)
 {
-	int					r;
-	char				buf[2048];
+	int		r;
+	char	buf[2048];
+	pid_t	pid;			
 
-	while ((r = read(cs, buf, 2047)) > 0)
+	pid = fork();
+	if (pid == 0)
 	{
-		buf[r] = '\0';
-		write(1, buf, ft_strlen(buf));
+		while ((r = read(cs, buf, 2047)) > 0)
+		{
+			buf[r] = '\0';
+			if (ft_strequ(buf, "ls\n"))
+				ft_putendl("LS");
+			else
+				ft_putstr(buf);
+		}
+		close(cs);
+		exit(0);
 	}
-	close(cs);
 }
 
 int		main(int ac, char **av)
@@ -66,8 +72,11 @@ int		main(int ac, char **av)
 	if (!check_port_range(port, av[0]))
 		return (0);
 	sock = create_server(port);
-	cs = accept(sock, (struct sockaddr *)&c_sin, &cslen);
-	connect_cus(cs);
+	while (42)
+	{
+		cs = accept(sock, (struct sockaddr *)&c_sin, &cslen);
+		connect_cus(cs);
+	}
 	close(sock);
 	return (0);
 }
