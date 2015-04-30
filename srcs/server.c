@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/28 13:16:48 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/04/29 19:32:39 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/04/30 20:13:23 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,59 +37,49 @@ int		create_server(int port)
 	return (sock);
 }
 
-void	connect_cus(int cs)
+void	exec_bin(char **cmd, int cs)
+{
+	pid_t	pid;
+
+	cmd[0] = ft_strdup(ft_strjoin("/bin/", cmd[0]));
+	if (open(cmd[0], O_RDONLY) != -1)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			dup2(cs, 0);
+			dup2(cs, 1);
+			dup2(cs, 2);
+			close(cs);
+			execv(cmd[0], cmd);
+		}
+	}
+	else
+		ft_putstr_fd("Command not found.\n", cs);
+}
+
+void	connect_cus(int cs, int sock)
 {
 	int		r;
 	char	buf[2048];
 	pid_t	pid;
-	pid_t	pid2;
 	char	*dir;
-	char	**t;		
+	char	*rtn;
+	char	**cmd;
 
-	t = NULL;
+	cmd = NULL;
 	pid = fork();
-	t = (char **)malloc(sizeof(char) * 2);
 	dir = ft_strjoin("client_", ft_itoa(cs));
 	mkdir(dir, 0777);
 	if (pid == 0)
 	{
+		chdir(ft_strjoin("server_", ft_itoa(sock)));
 		while ((r = read(cs, buf, 2047)) > 0)
 		{
 			buf[r] = '\0';
-			if (ft_strequ(buf, "ls\n"))
-			{
-				t[0] = ft_strdup("/bin/ls");
-				t[1] = NULL;
-				pid2 = fork();
-				if (pid2 == 0)
-				{
-				    dup2(cs, 0);
-					dup2(cs, 1);
-				    dup2(cs, 2);
-				    close(cs);
-					if (execv("/bin/ls", t))
-						ft_putendl("toto");
-				}
-				else
-					wait(NULL);
-			}
-			else if (ft_strequ(buf, "pwd\n"))
-			{
-				t[0] = ft_strdup("/bin/pwd");
-				t[1] = NULL;
-				pid2 = fork();
-				if (pid2 == 0)
-				{
-					dup2(cs, 0);
-					dup2(cs, 1);
-				    dup2(cs, 2);
-				    close(cs);
-				    if (execv("/bin/pwd", t))
-						ft_putendl("toto");
-				}
-				else
-					wait(NULL);
-			}
+			rtn = ft_strtrim(buf);
+			cmd = ft_strsplit(rtn, 32);
+			exec_bin(cmd, cs);
 		}
 		close(cs);
 		exit(0);
@@ -115,7 +105,7 @@ int		main(int ac, char **av)
 	while (42)
 	{
 		cs = accept(sock, (struct sockaddr *)&c_sin, &cslen);
-		connect_cus(cs);
+		connect_cus(cs, sock);
 	}
 	close(sock);
 	return (0);

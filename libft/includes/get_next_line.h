@@ -6,13 +6,13 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/25 18:50:14 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/03/25 18:50:18 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/04/30 18:35:04 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFF_SIZE 100
+# define BUFF_SIZE 1
 
 # include <sys/types.h>
 # include <stdlib.h>

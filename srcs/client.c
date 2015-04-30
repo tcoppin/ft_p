@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/28 13:16:54 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/04/29 19:38:10 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/04/30 19:46:46 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ int		main(int ac, char **av)
 	int		port;
 	int		sock;
 	char	*line;
-	char	buf[2048];
-	char	*rtn;
+	char	buf[4096];
 	int		r;
 
 	if (ac != 3)
@@ -58,12 +57,16 @@ int		main(int ac, char **av)
 	{
 		if (get_next_line(0, &line) > 0)
 		{
-			line = ft_strjoin_free(line, "\n");
 			send(sock, (const void *)line, sizeof(line), MSG_DONTROUTE);
-			r = read(sock, buf, 2047);
-			buf[r] = '\0';
-			rtn = ft_strtrim(buf);
-			ft_putendl(rtn);
+			//r = read(sock, buf, 4095);
+			while ((r = read(sock, buf, 4095)) > 0)
+			{
+				buf[r] = '\0';
+				ft_putstr(buf);
+				if (buf[r - 1] == '\n')
+					break ;
+			}
+			free(line);
 		}
 	}
 	close(sock);
