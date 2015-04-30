@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/28 13:16:48 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/04/30 20:13:23 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/04/30 21:48:13 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int		create_server(int port)
 void	exec_bin(char **cmd, int cs)
 {
 	pid_t	pid;
+	int		status;
+	struct rusage	rusage;
 
 	cmd[0] = ft_strdup(ft_strjoin("/bin/", cmd[0]));
 	if (open(cmd[0], O_RDONLY) != -1)
@@ -53,12 +55,14 @@ void	exec_bin(char **cmd, int cs)
 			close(cs);
 			execv(cmd[0], cmd);
 		}
+		else
+			wait4(pid, &status, 0, &rusage);
 	}
 	else
 		ft_putstr_fd("Command not found.\n", cs);
 }
 
-void	connect_cus(int cs, int sock)
+void	connect_cus(int cs)
 {
 	int		r;
 	char	buf[2048];
@@ -66,6 +70,8 @@ void	connect_cus(int cs, int sock)
 	char	*dir;
 	char	*rtn;
 	char	**cmd;
+	int		status;
+	struct rusage	rusage;
 
 	cmd = NULL;
 	pid = fork();
@@ -73,17 +79,26 @@ void	connect_cus(int cs, int sock)
 	mkdir(dir, 0777);
 	if (pid == 0)
 	{
-		chdir(ft_strjoin("server_", ft_itoa(sock)));
+		chdir(dir);
 		while ((r = read(cs, buf, 2047)) > 0)
 		{
 			buf[r] = '\0';
 			rtn = ft_strtrim(buf);
 			cmd = ft_strsplit(rtn, 32);
-			exec_bin(cmd, cs);
+			if (ft_strequ(cmd[0], "quit"))
+			{
+				write(cs, ft_itoa(pid), ft_strlen(ft_itoa(pid)));
+				break ;
+			}
+			else
+				exec_bin(cmd, cs);
 		}
+		ft_putendl("ok");
 		close(cs);
 		exit(0);
 	}
+	else
+		wait4(pid, &status, WNOHANG, &rusage);
 }
 
 int		main(int ac, char **av)
@@ -105,7 +120,7 @@ int		main(int ac, char **av)
 	while (42)
 	{
 		cs = accept(sock, (struct sockaddr *)&c_sin, &cslen);
-		connect_cus(cs, sock);
+		connect_cus(cs);
 	}
 	close(sock);
 	return (0);

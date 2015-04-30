@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/28 13:16:54 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/04/30 19:46:46 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/04/30 21:47:36 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int		main(int ac, char **av)
 	char	*line;
 	char	buf[4096];
 	int		r;
+	int		status;
+	struct rusage	rusage;
 
 	if (ac != 3)
 		ft_usage_cl(av[0]);
@@ -58,7 +60,13 @@ int		main(int ac, char **av)
 		if (get_next_line(0, &line) > 0)
 		{
 			send(sock, (const void *)line, sizeof(line), MSG_DONTROUTE);
-			//r = read(sock, buf, 4095);
+			if (ft_strnequ(line, "quit", 4))
+			{
+				r = read(sock, buf, 4095);
+				buf[r] = '\0';
+				wait4((pid_t)buf, &status, WNOHANG, &rusage);
+				break ;
+			}
 			while ((r = read(sock, buf, 4095)) > 0)
 			{
 				buf[r] = '\0';
