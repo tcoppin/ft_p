@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client_error.c                                     :+:      :+:    :+:   */
+/*   client.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/05/06 14:39:07 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/05/06 14:39:30 by tcoppin          ###   ########.fr       */
+/*   Created: 2015/05/01 18:38:19 by tcoppin           #+#    #+#             */
+/*   Updated: 2015/05/06 14:40:08 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "client.h"
+#ifndef CLIENT_H
+# define CLIENT_H
 
-void	ft_usage_cl(char *str)
-{
-	ft_putendl(ft_strjoin(ft_strjoin("Usage : ", str), " <addr> <port>"));
-	exit(-1);
-}
+# include "ft_p.h"
+
+void	ft_usage_cl(char *str);
+
+#endif

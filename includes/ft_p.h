@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/28 13:12:12 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/04/29 15:38:24 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/05/01 18:40:57 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,5 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <fcntl.h>
-
-/*
-**	server_error.c
-*/
-int				check_port_nb(char *str, char *bin);
-int				check_port_range(int port, char *bin);
-void			ft_usage(char *str);
-
-/*
-**	client_error.c
-*/
-void			ft_usage_cl(char *str);
-int				check_port_nb(char *str, char *bin);
-
-/*
-**	server.c
-*/
-int				create_server(int port);
 
 #endif
