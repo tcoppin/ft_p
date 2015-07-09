@@ -6,7 +6,7 @@
 #    By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/04/28 12:54:53 by tcoppin           #+#    #+#              #
-#    Updated: 2015/05/06 14:39:45 by tcoppin          ###   ########.fr        #
+#    Updated: 2015/06/03 16:36:51 by tcoppin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,21 +20,24 @@ else
 	FLAGS	= -g3
 endif
 
-SRC_SV	=	server.c server_error.c
-SRC_CL	=	client.c client_error.c
+SRC_SV	=	server.c misc_server.c init_server.c ft_cd.c exec_server.c \
+			ft_to_client.c ft_check.c
+SRC_CL	=	client.c misc_client.c init_client.c ft_to_server.c exec_client.c \
+			ft_check.c ft_cd_client.c
 
 OBJ_SV	=	$(SRC_SV:.c=.o)
 OBJ_CL	=	$(SRC_CL:.c=.o)
 
 INC 		= ft_p.h
 LIBFLAGS 	= -L./libft/ -lft
-SRCDIR  	= ./srcs/
+SRCDIR_SV	= ./srcs/server/
+SRCDIR_CL	= ./srcs/client/
 OBJDIR  	= ./obj/
 INCDIRLIB	= ./libft/includes/
 INCDIR		= ./includes/
-SRCS_SV		= $(addprefix $(SRCDIR), $(SRC_SV))
+SRCS_SV		= $(addprefix $(SRCDIR_SV), $(SRC_SV))
 OBJS_SV		= $(addprefix $(OBJDIR), $(OBJ_SV))
-SRCS_CL		= $(addprefix $(SRCDIR), $(SRC_CL))
+SRCS_CL		= $(addprefix $(SRCDIR_CL), $(SRC_CL))
 OBJS_CL		= $(addprefix $(OBJDIR), $(OBJ_CL))
 
 .SILENT:
