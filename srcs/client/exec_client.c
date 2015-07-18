@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/03 16:03:32 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/06/29 18:44:39 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/18 18:36:35 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		exec_put_cl(t_client *all_c, char *cmd_all, char **cmd_array)
 			while ((rd = read(fd, tmp, 2047)) > 0)
 			{
 				tmp[rd] = '\0';
-				// write(0, tmp, rd);
+				write(1, tmp, rd);
 				write(all_c->sock, tmp, rd);
 			}
 		}
