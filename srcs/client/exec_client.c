@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/03 16:03:32 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/07/18 18:36:35 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/20 17:27:03 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,20 @@ int		exec_put_cl(t_client *all_c, char *cmd_all, char **cmd_array)
 		ft_putstr(all_c->buf);
 		if (ft_strequ(all_c->buf, "Ok\n"))
 		{
+			ft_bzero(tmp, 2048);
 			write_server(all_c, ft_itoa(buf.st_size));
-			while ((rd = read(fd, tmp, 2047)) > 0)
+			r = recv(all_c->sock, all_c->buf, 2047, 0);
+			all_c->buf[r] = '\0';
+			ft_putstr(all_c->buf);
+			if (ft_strequ(all_c->buf, "Ok\n"))
 			{
-				tmp[rd] = '\0';
-				write(1, tmp, rd);
-				write(all_c->sock, tmp, rd);
+				while ((rd = read(fd, tmp, 2047)) > 0)
+				{
+					tmp[rd] = '\0';
+					// write(1, tmp, rd);
+					write(all_c->sock, tmp, rd);
+					ft_bzero(tmp, 2048);
+				}
 			}
 		}
 	}

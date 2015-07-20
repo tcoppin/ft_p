@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/02 12:01:40 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/06/29 14:26:45 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/20 17:51:02 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,31 @@
 int		exec_put(t_cus *cus, char **cmd_array)
 {
 	int		rd;
+	int
 	int		tot;
 	int		size;
 	char	*save;
 	char	tmp[2048];
 	
 	ft_putendl(cmd_array[1]);
-	save = ft_strdup(cus->buf);
-	write_client(cus, "Ok");
-	read_client(cus);
-	size = ft_atoi(cus->buf);
-	tot = 0;
-	while (tot < size)
+	if ((fd = open(cmd_array[1], O_WRONLY | O_CREAT, 0644)) >= 0)
 	{
-		rd = recv(cus->cs, tmp, 2047, 0);
-		tot += rd;
-		write(0, tmp, rd);
+		save = ft_strdup(cus->buf);
+		write_client(cus, "Ok");
+		read_client(cus);
+		size = ft_atoi(cus->buf);
+		write_client(cus, "Ok");
+		tot = 0;
+		while (tot < size)
+		{
+			rd = recv(cus->cs, tmp, 2047, 0);
+			tot += rd;
+			write(0, tmp, rd);
+		}
+		ft_strclr(cus->buf);
+		ft_strcat(cus->buf, save);
+		free(save);
 	}
-	ft_strclr(cus->buf);
-	ft_strcat(cus->buf, save);
-	free(save);
 	return (1);
 }
 
