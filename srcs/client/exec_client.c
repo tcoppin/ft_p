@@ -6,47 +6,61 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/03 16:03:32 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/07/20 17:27:03 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/21 14:40:28 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
+
+int		ft_send_file(t_client *all_c, int fd, struct stat buf)
+{
+
+}
 
 int		exec_put_cl(t_client *all_c, char *cmd_all, char **cmd_array)
 {
 	int			fd;
 	int			rd;
 	int			r;
+	DIR			*pdir;
 	char		tmp[2048];
 	struct stat	buf;
 
-	write_server(all_c, cmd_all);
-	fd = open(cmd_array[1], O_RDONLY);
-	if (fd >= 0 && fstat(fd, &buf) == 0)
+	if (!(pdir = opendir(cmd_array[1])) &&
+		(fd = open(cmd_array[1], O_RDONLY)) >= 0)
 	{
-		r = recv(all_c->sock, all_c->buf, 2047, 0);
-		all_c->buf[r] = '\0';
-		ft_putstr(all_c->buf);
-		if (ft_strequ(all_c->buf, "Ok\n"))
+		write_server(all_c, cmd_all);
+		if (fstat(fd, &buf) == 0)
 		{
-			ft_bzero(tmp, 2048);
-			write_server(all_c, ft_itoa(buf.st_size));
 			r = recv(all_c->sock, all_c->buf, 2047, 0);
 			all_c->buf[r] = '\0';
-			ft_putstr(all_c->buf);
 			if (ft_strequ(all_c->buf, "Ok\n"))
 			{
-				while ((rd = read(fd, tmp, 2047)) > 0)
+				ft_send_file(all_c, fd, buf);
+				ft_bzero(tmp, 2048);
+				write_server(all_c, ft_itoa(buf.st_size));
+				r = recv(all_c->sock, all_c->buf, 2047, 0);
+				all_c->buf[r] = '\0';
+				if (ft_strequ(all_c->buf, "Ok\n"))
 				{
-					tmp[rd] = '\0';
-					// write(1, tmp, rd);
-					write(all_c->sock, tmp, rd);
-					ft_bzero(tmp, 2048);
+					while ((rd = read(fd, tmp, 2047)) > 0)
+					{
+						tmp[rd] = '\0';
+						write(all_c->sock, tmp, rd);
+						ft_bzero(tmp, 2048);
+					}
 				}
 			}
 		}
+		close(fd);
 	}
-	close(fd);
+	else
+	{
+		if (pdir)
+			closedir(pdir);
+		ft_putendl("\033[1;33mput: Can't open the file.\033[00m");
+		return (-1);
+	}
 	return (1);
 }
 

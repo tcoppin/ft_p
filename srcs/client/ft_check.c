@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/03 15:52:37 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/06/29 11:38:50 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/21 14:35:12 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int		is_client(char **cmd_array, t_client *all_c, char *cmd_all)
 
 void	check_cmd_cl(char **cmd_array, t_client *all_c, char *cmd_all)
 {
-
 	if (is_client(cmd_array, all_c, cmd_all))
 		;
 	else
