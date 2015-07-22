@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/02 12:01:40 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/07/22 17:19:37 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/22 21:37:08 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,14 @@ int		exec_put(t_cus *cus, char **cmd_array)
 	return (1);
 }
 
+void	dup_exec(t_cus *cus)
+{
+	dup2(cus->cs, 0);
+	dup2(cus->cs, 1);
+	dup2(cus->cs, 2);
+	close(cus->cs);
+}
+
 int		exec_cmd(t_cus *cus, char **cmd_array, char *bin)
 {
 	pid_t			pid;
@@ -55,10 +63,7 @@ int		exec_cmd(t_cus *cus, char **cmd_array, char *bin)
 	}
 	if (pid == 0)
 	{
-		dup2(cus->cs, 0);
-		dup2(cus->cs, 1);
-		dup2(cus->cs, 2);
-		close(cus->cs);
+		dup_exec(cus);
 		if (execv(bin, cmd_array) < 0)
 		{
 			ft_putendl("\033[1;33mError when exec the command.\033[00m");
@@ -66,7 +71,11 @@ int		exec_cmd(t_cus *cus, char **cmd_array, char *bin)
 		}
 	}
 	else
+	{
 		wait4(pid, &status, 0, &m_rusage);
+		if (WEXITSTATUS(status))
+			return (-1);
+	}
 	return (1);
 }
 

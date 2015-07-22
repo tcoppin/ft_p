@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/02 18:47:02 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/07/22 16:56:53 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/22 18:03:15 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ void	check_cmd(char **cmd_array, t_cus *cus, t_serv *all_s)
 			return ;
 		i = 1;
 	}
-	else if (is_builtin(cmd_array, cus, all_s))
-		i = 1;
-	else if (is_binary(cmd_array, cus))
-		i = 1;
+	else if ((i = is_builtin(cmd_array, cus, all_s)))
+		;
+	else if ((i = is_binary(cmd_array, cus)))
+		;
 	else
 		write_client(cus, "Command not found.");
 	if (i > 0)

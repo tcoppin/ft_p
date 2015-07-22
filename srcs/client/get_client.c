@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/07/22 17:27:14 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/07/22 17:27:24 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/22 17:45:57 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ int		exec_get_cl(t_client *all_c, char *cmd_all, char **cmd_array)
 		if ((fd = open(cmd_array[1], O_WRONLY | O_CREAT, 0644)) >= 0)
 			get_file(fd, all_c, size);
 		close(fd);
+	}
+	else
+	{
+		ft_putstr(all_c->buf);
+		return (-1);
 	}
 	return (1);
 }
