@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/30 17:39:03 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/06/04 12:30:25 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/22 16:54:20 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void			check_cmd_cl(char **cmd_array, t_client *all_c, char *cmd_all);
 /*
 **	EXEC_CLIENT.C
 */
+int				exec_get_cl(t_client *all_c, char *cmd_all, char **cmd_array);
 int				exec_put_cl(t_client *all_c, char *cmd_all, char **cmd_array);
 int				exec_l_cmd(char **cmd_array, char *bin);
 int				exec_l_pwd(t_client *all_c, char **cmd_array);

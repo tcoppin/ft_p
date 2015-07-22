@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/30 17:38:36 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/06/04 18:17:07 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/22 16:54:10 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int				ft_sh_cd_option(t_cus *cus, char *pwd, t_serv *all_s);
 /*
 **	EXEC_SERVER.C
 */
+int				exec_get(t_cus *cus, char **cmd_array);
 int				exec_put(t_cus *cus, char **cmd_array);
 int				exec_cmd(t_cus *cus, char **cmd_array, char *bin);
 int				exec_pwd(t_cus *cus, char **cmd_array, t_serv *all_s);

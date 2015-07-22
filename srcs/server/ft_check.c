@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/02 18:47:02 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/06/29 11:35:19 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/22 16:56:53 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int		is_builtin(char **cmd_array, t_cus *cus, t_serv *all_s)
 		i = exec_pwd(cus, cmd_array, all_s);
 	else if (ft_strequ(cmd_array[0], "cd"))
 		i = exec_cd(cus, cmd_array, all_s);
-	// else if (ft_strequ(cmd_array[0], "get"))
-	// 	i = exec_get(cus, cmd_array, all_s);
+	else if (ft_strequ(cmd_array[0], "get"))
+		i = exec_get(cus, cmd_array);
 	else if (ft_strequ(cmd_array[0], "put"))
 		i = exec_put(cus, cmd_array);
 	return (i);
@@ -61,7 +61,8 @@ void	check_cmd(char **cmd_array, t_cus *cus, t_serv *all_s)
 	else
 		write_client(cus, "Command not found.");
 	if (i > 0)
-		write_client(cus, "\033[1;32m-- Server return a SUCCESS --\n\033[00m\0");
+		write_client(cus,
+		"\033[1;32m-- Server return a SUCCESS --\n\033[00m\0");
 	else
 		write_client(cus, "\033[1;31m-- Server return an ERROR --\n\033[00m\0");
 	ft_put_hist(cus, i);

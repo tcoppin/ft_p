@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/03 15:52:37 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/07/21 14:35:12 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/22 16:55:04 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,12 @@ int		is_client(char **cmd_array, t_client *all_c, char *cmd_all)
 		i = exec_l_cd(all_c, cmd_array);
 	else if (is_bin(cmd_array))
 		i = 1;
-	// else if (ft_strequ(cmd_array[0], "get"))
-	// 	i = exec_get_cl(all_c, cmd_all);
+	else if (ft_strequ(cmd_array[0], "get"))
+	{
+		i = exec_get_cl(all_c, cmd_all, cmd_array);
+		if (i > 0)
+			return_serv(all_c);
+	}
 	else if (ft_strequ(cmd_array[0], "put"))
 	{
 		i = exec_put_cl(all_c, cmd_all, cmd_array);
