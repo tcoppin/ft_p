@@ -6,47 +6,11 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/03 16:03:32 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/07/22 16:49:53 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/22 17:27:49 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
-
-int		exec_get_cl(t_client *all_c, char *cmd_all, char **cmd_array)
-{
-	int		fd;
-	int		size[3];
-	char	*save;
-	char	tmp[2048];
-
-	write_server(all_c, cmd_all);
-	size[0] = recv(all_c->sock, all_c->buf, 2047, 0);
-	all_c->buf[size[0]] = '\0';
-	if (ft_strequ(all_c->buf, "Ok\n"))
-	{
-		if ((fd = open(cmd_array[1], O_WRONLY | O_CREAT, 0644)) >= 0)
-		{
-			save = ft_strdup(all_c->buf);
-			write_server(all_c, "Ok");
-			read_server(all_c);
-			size[2] = ft_atoi(all_c->buf);
-			write_server(all_c, "Ok");
-			size[1] = 0;
-			while (size[1] < size[2])
-			{
-				size[0] = recv(all_c->sock, tmp, 2047, 0);
-				size[1] += size[0];
-				write(fd, tmp, size[0]);
-			}
-			write_server(all_c, "Ok");
-			ft_strclr(all_c->buf);
-			ft_strcat(all_c->buf, save);
-			free(save);
-		}
-		close(fd);
-	}
-	return (1);
-}
 
 void	ft_send_file(t_client *all_c, int fd, struct stat buf)
 {

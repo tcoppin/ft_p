@@ -6,7 +6,7 @@
 #    By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/04/28 12:54:53 by tcoppin           #+#    #+#              #
-#    Updated: 2015/07/22 17:27:40 by tcoppin          ###   ########.fr        #
+#    Updated: 2015/06/03 16:36:51 by tcoppin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,9 @@ else
 endif
 
 SRC_SV	=	server.c misc_server.c init_server.c ft_cd.c exec_server.c \
-			ft_to_client.c ft_check.c get_server.c
+			ft_to_client.c ft_check.c
 SRC_CL	=	client.c misc_client.c init_client.c ft_to_server.c exec_client.c \
-			ft_check.c ft_cd_client.c get_client.c
+			ft_check.c ft_cd_client.c
 
 OBJ_SV	=	$(SRC_SV:.c=.o)
 OBJ_CL	=	$(SRC_CL:.c=.o)
