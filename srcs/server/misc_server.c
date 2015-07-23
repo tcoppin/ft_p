@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/30 17:42:39 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/07/23 12:56:56 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/23 15:46:03 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,22 @@ void	ft_error_server(int i, char *str)
 	}
 }
 
-void	get_date()
+void	put_in_log(char *msg, t_serv *all_s)
 {
-	char buffer[256]; 
-    time_t timestamp = time(NULL); 
-  
-    strftime(buffer, sizeof(buffer), "%x : ", localtime(&timestamp)); 
-    ft_putstr(buffer);
+	char	buffer[256];
+	time_t	timestamp;
+
+	timestamp = time(NULL);
+	strftime(buffer, sizeof(buffer), "%d/%m/%y - %X : ", localtime(&timestamp));
+	write(all_s->fd, buffer, ft_strlen(buffer));
+	write(all_s->fd, msg, ft_strlen(msg));
 }
 
-void	ft_put_hist(t_cus *cus, int i)
+void	ft_put_hist(t_cus *cus, int i, t_serv *all_s)
 {
-	get_date();
+	char	*str;
+
+	str = NULL;
 	if (i > 0)
 		ft_putstr("\033[1;32m");
 	else
@@ -53,6 +57,14 @@ void	ft_put_hist(t_cus *cus, int i)
 		ft_putendl(" and it's a SUCCESS --\033[00m");
 	else
 		ft_putendl(" and it's an ERROR --\033[00m");
+	str = ft_strjoin("Execute \"", cus->buf);
+	str = ft_strjoin_free(str, "\" by client ");
+	str = ft_strjoin_free(str, ft_itoa(cus->cs));
+	if (i > 0)
+		str = ft_strjoin_free(str, " and it's a SUCCESS\n");
+	else
+		str = ft_strjoin_free(str, " and it's an ERROR\n");
+	put_in_log(str, all_s);
 }
 
 char	*ft_leave_tab(char *cmd)

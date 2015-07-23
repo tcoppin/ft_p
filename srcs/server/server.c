@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/30 17:40:22 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/07/22 22:46:22 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/23 15:42:04 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	server_app(t_cus *cus, t_serv *all_s)
 	}
 }
 
-void	ft_client_msg(t_cus *cus, int i)
+void	ft_client_msg(t_cus *cus, int i, t_serv *all_s)
 {
 	ft_putstr("\033[1;34m");
 	ft_putstr("-- Client \"");
@@ -39,6 +39,10 @@ void	ft_client_msg(t_cus *cus, int i)
 	else if (i == 2)
 		ft_putstr("\" is now disconnect ");
 	ft_putendl(" --\033[00m");
+	if (i == 1)
+		put_in_log("Client connect\n", all_s);
+	else if (i == 2)
+		put_in_log("Client disconnect\n", all_s);
 }
 
 void	connect_cus(t_serv *all_s)
@@ -52,12 +56,12 @@ void	connect_cus(t_serv *all_s)
 	if (cus.pid == 0)
 	{
 		init_client(&cus, all_s);
-		ft_client_msg(&cus, 1);
+		ft_client_msg(&cus, 1, all_s);
 		while ((r = read_client(&cus)) > 0)
 		{
 			if (ft_strnequ(cus.buf, "quit", 4))
 			{
-				ft_client_msg(&cus, 2);
+				ft_client_msg(&cus, 2, all_s);
 				break ;
 			}
 			server_app(&cus, all_s);
@@ -89,5 +93,6 @@ int		main(int ac, char **av)
 			ft_error_server(OTH, "A client want to connect and accept fail.");
 	}
 	close (all_s.sock);
+	close (all_s.fd);
 	return (0);
 }

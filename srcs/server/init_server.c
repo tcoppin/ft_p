@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/01 14:54:23 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/06/04 12:07:06 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/23 15:48:40 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ int		create_server(t_serv *all_s)
 	listen(all_s->sock, 47);
 	all_s->dir = ft_strdup("d_server");
 	mkdir(all_s->dir, 0777);
+	all_s->fd = open("ft_p.log", O_WRONLY | O_CREAT, 0644);
+	lseek(all_s->fd, 0, SEEK_END);
+	put_in_log("/!\\ Server start /!\\\n", all_s);
 	ft_putendl("\033[1;32m-- Hello I am a ft_p server --\033[00m");
 	return (1);
 }

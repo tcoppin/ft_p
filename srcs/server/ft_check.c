@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/02 18:47:02 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/07/22 18:03:15 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/23 15:41:17 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ void	check_cmd(char **cmd_array, t_cus *cus, t_serv *all_s)
 		"\033[1;32m-- Server return a SUCCESS --\n\033[00m\0");
 	else
 		write_client(cus, "\033[1;31m-- Server return an ERROR --\n\033[00m\0");
-	ft_put_hist(cus, i);
+	ft_put_hist(cus, i, all_s);
 	send(cus->cs, "\0", 1, 0);
 }

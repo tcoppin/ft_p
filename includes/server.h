@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/30 17:38:36 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/07/22 17:20:00 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/23 15:41:34 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ typedef struct	s_serv
 	int		port;
 	int		sock;
 	int		cs;
+	int		fd;
 	char	*dir;
 	char	*root;
 }				t_serv;
@@ -81,8 +82,9 @@ int				read_client(t_cus *cus);
 /*
 **	MISC_SERVER.C
 */
+void			put_in_log(char *msg, t_serv *all_s);
 void			ft_error_server(int i, char *str);
 char			*ft_leave_tab(char *cmd);
-void			ft_put_hist(t_cus *cus, int i);
+void			ft_put_hist(t_cus *cus, int i, t_serv *all_s);
 
 #endif
