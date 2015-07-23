@@ -6,11 +6,20 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/30 17:42:39 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/07/23 15:46:03 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/24 01:31:43 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
+
+t_serv	*ft_save_serv(t_serv *all_s)
+{
+	static t_serv	*s_all_s = NULL;
+
+	if (all_s)
+		s_all_s = all_s;
+	return (s_all_s);
+}
 
 void	ft_error_server(int i, char *str)
 {

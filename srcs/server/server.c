@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/30 17:40:22 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/07/23 15:42:04 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/24 01:35:25 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,18 @@ void	connect_cus(t_serv *all_s)
 	}
 }
 
+void	ft_sigint(int i)
+{
+	t_serv	*all_s;
+
+	(void)i;
+	all_s = ft_save_serv(NULL);
+	put_in_log("/!\\ Server shutdown /!\\\n", all_s);
+	close (all_s->sock);
+	close (all_s->fd);
+	exit(0);
+}
+
 int		main(int ac, char **av)
 {
 	t_serv				all_s;
@@ -84,6 +96,8 @@ int		main(int ac, char **av)
 		ft_error_server(USG, av[0]);
 	ft_init_serv(&all_s, av);
 	create_server(&all_s);
+	ft_save_serv(&all_s);
+	signal(SIGINT, ft_sigint);
 	while (42)
 	{
 		all_s.cs = accept(all_s.sock, (struct sockaddr *)&c_sin, &cslen);
