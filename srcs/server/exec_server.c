@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/02 12:01:40 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/07/22 21:37:08 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/23 18:09:26 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,20 @@ void	dup_exec(t_cus *cus)
 	close(cus->cs);
 }
 
+int		wait_exec(pid_t pid)
+{
+	int				status;
+	struct rusage	m_rusage;
+
+	wait4(pid, &status, 0, &m_rusage);
+	if (WEXITSTATUS(status))
+		return (-1);
+	return (0);
+}
+
 int		exec_cmd(t_cus *cus, char **cmd_array, char *bin)
 {
 	pid_t			pid;
-	int				status;
-	struct rusage	m_rusage;
 
 	pid = fork();
 	if (pid < 0)
@@ -72,8 +81,7 @@ int		exec_cmd(t_cus *cus, char **cmd_array, char *bin)
 	}
 	else
 	{
-		wait4(pid, &status, 0, &m_rusage);
-		if (WEXITSTATUS(status))
+		if (wait_exec(pid) == -1)
 			return (-1);
 	}
 	return (1);

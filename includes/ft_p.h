@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/30 17:37:04 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/07/23 12:32:26 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/23 17:52:56 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <fcntl.h>
-# include <time.h> 
+# include <time.h>
 # include "libft.h"
 # include "server.h"
 # include "client.h"

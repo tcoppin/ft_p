@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/02 19:24:30 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/07/23 12:53:41 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/23 17:53:24 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int		main(int ac, char **av)
 	t_client		all_c;
 	struct hostent	*hp;
 	struct in_addr	**addr_list;
-	
+
 	if (ac != 3)
 		ft_error_client(USG, av[0]);
 	if ((hp = gethostbyname(av[1])) == NULL)
