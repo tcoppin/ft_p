@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/02 19:24:30 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/06/04 12:18:00 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/23 12:53:41 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,20 @@ void	brain_client(t_client *all_c)
 
 int		main(int ac, char **av)
 {
-	t_client	all_c;
-
+	t_client		all_c;
+	struct hostent	*hp;
+	struct in_addr	**addr_list;
+	
 	if (ac != 3)
 		ft_error_client(USG, av[0]);
-	ft_init_client(&all_c, av);
-	create_client(av[1], &all_c);
+	if ((hp = gethostbyname(av[1])) == NULL)
+	{
+		ft_putendl("\033[1;31m-- Connect to the server ERROR --\033[00m");
+		exit(2);
+	}
+	addr_list = (struct in_addr **)hp->h_addr_list;
+	ft_init_client(&all_c, av, inet_ntoa(*addr_list[0]));
+	create_client(inet_ntoa(*addr_list[0]), &all_c);
 	while (all_c.quit == 0 && ft_put_prompt(&all_c))
 	{
 		if (get_next_line(0, &(all_c).line) > 0)

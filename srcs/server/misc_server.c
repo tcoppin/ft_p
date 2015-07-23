@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/30 17:42:39 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/06/02 19:59:22 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/23 12:56:56 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,18 @@ void	ft_error_server(int i, char *str)
 	}
 }
 
+void	get_date()
+{
+	char buffer[256]; 
+    time_t timestamp = time(NULL); 
+  
+    strftime(buffer, sizeof(buffer), "%x : ", localtime(&timestamp)); 
+    ft_putstr(buffer);
+}
+
 void	ft_put_hist(t_cus *cus, int i)
 {
+	get_date();
 	if (i > 0)
 		ft_putstr("\033[1;32m");
 	else

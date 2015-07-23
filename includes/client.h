@@ -6,7 +6,7 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/30 17:39:03 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/07/22 16:54:20 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/23 12:23:21 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int				ft_put_prompt(t_client *all_c);
 /*
 **	INIT_CLIENT.C
 */
-void			ft_init_client(t_client *all_c, char **av);
+void			ft_init_client(t_client *all_c, char **av, char *addr);
 int				create_client(char *addr, t_client *all_c);
 
 /*

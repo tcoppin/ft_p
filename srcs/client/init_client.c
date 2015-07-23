@@ -6,16 +6,16 @@
 /*   By: tcoppin <tcoppin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/02 19:32:19 by tcoppin           #+#    #+#             */
-/*   Updated: 2015/06/04 12:12:56 by tcoppin          ###   ########.fr       */
+/*   Updated: 2015/07/23 12:27:21 by tcoppin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
 
-void	ft_init_client(t_client *all_c, char **av)
+void	ft_init_client(t_client *all_c, char **av, char *addr)
 {
 	all_c->port = ft_atoi(av[2]);
-	all_c->addr = av[1];
+	all_c->addr = addr;
 	all_c->quit = 0;
 }
 
