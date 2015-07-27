@@ -23,15 +23,15 @@
 
 ## Available commands :
 
-   * whoami
-   * pwd
-   * cd
-   * get
-   * put
-   * ls
-   * mkdir
-   * rm
-   * lls
-   * lmkdir
-   * lrm
-   * quit
+   * whoami (display the number of client)
+   * pwd (writes the pathname of the current working directory)
+   * cd (change the working directory of the server for the current client)
+   * get (transfert a file server to client)
+   * put (transfert a file client to server)
+   * ls (list directory contents of the server)
+   * mkdir (create a new directory on the server)
+   * rm (remove directory entries)
+   * lls (list directory contents of the client)
+   * lmkdir (create a new directory on the client)
+   * lrm (remove directory entries on the client)
+   * quit (disconnect and exit the client)
