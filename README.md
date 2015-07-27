@@ -1,6 +1,6 @@
 # ft_p
 
-<table style="border: 0;">
+<table border="0">
    <tr>
       <td>
          This is a project of <a href="https://42.fr" target="_blank" >Ecole 42</a><br />
