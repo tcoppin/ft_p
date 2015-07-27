@@ -7,8 +7,8 @@
          This program contain a ft_p server and a ft_p client.
       </td>
       <td width="45%">
-         <img src="http://i.imgur.com/Y27XA3B.png?1" width="45%" /><br />
-         <img src="http://i.imgur.com/QxdpRzu.png?1" width="45%" />
+         <img src="http://i.imgur.com/Y27XA3B.png?1" width="100%" /><br />
+         <img src="http://i.imgur.com/QxdpRzu.png?1" width="100%" />
       </td>
    </tr>
 </table>
