@@ -13,8 +13,6 @@
    </tr>
 </table>
 
-
-<br /><br /><br /><br /><br /><br /><br /><br />
 ## Usage
 	$>  make
 	$>  usage: ./server <port>
